@@ -1,5 +1,5 @@
 -- Author: ILIKEPIEFOO2
--- Heavily based upon: https://github.com/wiremod/wire/blob/master/lua/entities/gmod_wire_expression2/core/chat.lua#L43
+-- Heavily based upon: https://github.com/wiremod/wire/blob/master/lua/entities/gmod_wire_expression2/core/chat.lua
 
 local IsValid = IsValid
 
@@ -19,7 +19,7 @@ hook.Add("PlayerAddMoney","Exp2MoneyChanged",function(ply,amount)
     local entry = { ply, amount, CurTime() }
     MoneyList[ply:EntIndex()] = entry
     MoneyList.last = entry
-    for e,_ in pairs(MoneyAlert) do
+    for e in pairs(MoneyAlert) do
         if IsValid(e) then
             e.context.data.runByMoneyChange = entry
             e:Execute()
