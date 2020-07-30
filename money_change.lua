@@ -12,7 +12,7 @@ local MoneyAlert = {}
 --[[************************************************************************]]--
 
 registerCallback("destruct",function(self)
-    ChatAlert[self.entity] = nil
+    MoneyAlert[self.entity] = nil
 end
 
 hook.Add("PlayerAddMoney","Exp2MoneyChanged",function(ply,amount)
