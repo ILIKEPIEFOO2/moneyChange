@@ -4,7 +4,7 @@
 local IsValid = IsValid
 
 local MoneyList = {
-    last = { nil, 0, 0 }
+    last = { nil, 0, 0, 0 }
 }
 
 local MoneyAlert = {}
@@ -15,8 +15,8 @@ registerCallback("destruct",function(self)
     MoneyAlert[self.entity] = nil
 end
 
-hook.Add("PlayerAddMoney","Exp2MoneyChanged",function(ply,amount)
-    local entry = { ply, amount, CurTime() }
+hook.Add("playerWalletChanged","Exp2MoneyChanged",function(ply,amount,previous)
+    local entry = { ply, amount, CurTime(), previous }
     MoneyList[ply:EntIndex()] = entry
     MoneyList.last = entry
     for e in pairs(MoneyAlert) do
@@ -94,6 +94,13 @@ e2function number lastMoneyChangeWhen()
     return entry[3]
 end
 
+--- Returns the balance before the money change occured.
+e2function number lastMoneyChangeWallet()
+    local entry = MoneyList.last
+    if not entry then return 0 end
+
+    return entry[4]
+end
 
 --- Returns how much the player’s money last changed.
 e2function number entity:lastMoneyChangeAmount()
@@ -115,4 +122,15 @@ e2function number entity:lastMoneyChangeWhen()
     if not entry then return 0 end
 
     return entry[3]
+end
+
+--- Returns the balance of the player before the last money change.
+e2function number entity:lastMoneyChangeWallet()
+    if not IsValid(this) then return 0 end
+    if not this:IsPlayer() then return 0 end
+    
+    local entry = MoneyList[this:EntIndex()]
+    if not entry then return 0 end
+
+    return entry[4]
 end
