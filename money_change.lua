@@ -13,7 +13,7 @@ local MoneyAlert = {}
 
 registerCallback("destruct",function(self)
     MoneyAlert[self.entity] = nil
-end
+end)
 
 hook.Add("playerWalletChanged","Exp2MoneyChanged",function(ply,amount,previous)
     local entry = { ply, amount, CurTime(), previous }
@@ -28,14 +28,14 @@ hook.Add("playerWalletChanged","Exp2MoneyChanged",function(ply,amount,previous)
             MoneyAlert[e] = nil
          end
     end
-end
+end)
          
 
 
 
 hook.Add("EntityRemoved","Exp2MoneyPlayerDisconnect", function(ply)
     MoneyList[ply:EntIndex()] = nil
-end
+end)
 
 --[[************************************************************************]]--
 
